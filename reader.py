@@ -1,6 +1,7 @@
 import subprocess
 import re
 import sys
+import os
 
 class MetaReader:
 
@@ -15,7 +16,7 @@ Param: data-file (String)
        <path of the file which is to be processed
         for metadata>
 
-Functions: __init__()            - Constructor.
+functions: __init__()            - Constructor.
            __read()              - Runs subprocess returns html from stdout.
            __convert_dms_to_dd() - Converts Degree, minutes, seconds to
                                    degree decimals.
@@ -29,6 +30,7 @@ Functions: __init__()            - Constructor.
     
     def __init__(self,data_file):
         self.data_file = data_file
+        self.__core_path = "res\\exiftool"
 
     # Trying to run the sub process if it fails
     # Max tries = 5 
@@ -36,7 +38,8 @@ Functions: __init__()            - Constructor.
 
     def __read(self):
         try:
-            process = subprocess.run(["exiftool","-h",self.data_file],capture_output=True)
+            tool_path = os.path.join(os.getcwd(),self.__core_path)
+            process = subprocess.run([tool_path,"-h",self.data_file],capture_output=True)
             return process.stdout.decode()
         except:
             while(tries != 0):
@@ -64,7 +67,7 @@ Functions: __init__()            - Constructor.
     # Returns the raw stdout of the subprocess, which is html
     def get_html(self):
         return self.__read()
-    
+
     # Returns the converted stdout from html to dict
     def get_dict(self):
         raw = self.__read()
@@ -86,7 +89,7 @@ Functions: __init__()            - Constructor.
         li = []
         for item in raw[:raw.find("</table>")-7].split("</td>"):
             li.append(item[item.find("<td>")+len("<td>"):])
-        # Converting the above list to dict, with first the key then value
+        #converting the above list to dict, with first the key then value
         latitude = None
         longitude = None
         for i in range(0,len(li)-1,2):
@@ -101,8 +104,6 @@ Functions: __init__()            - Constructor.
                 val = re.sub(pattern2,'"',val)
             meta_dict[li[i]]=val
 
-            # If GPS latitude and longitude is present then convert it 
-            # to the form of decimal degrees.
             if(li[i] == "GPS Latitude"):
                 latitude = self.__convert_dms_to_dd(li[i+1])
             if(li[i] == "GPS Longitude"):
@@ -114,9 +115,8 @@ Functions: __init__()            - Constructor.
     
 
 #---------------------------------------------TESTING----------------------------------------------------------------
-"""
 obj = MetaReader("C:\\Users\\Aquib\\Downloads\\20200319_224342.jpg")
 meta_dict=obj.get_dict()
 for key, value in meta_dict.items():
    print("{} : {} ".format(key,value))
-"""
+
