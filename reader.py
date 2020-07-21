@@ -11,9 +11,19 @@ class MetaReader:
     Processes it and returns it as dictionary
     or default html format
 
-    Param: data-file (String)
-           <path of the file which is to be processed
-           for metadata>
+Param: data-file (String)
+       <path of the file which is to be processed
+        for metadata>
+
+Functions: __init__()            - Constructor.
+           __read()              - Runs subprocess returns html from stdout.
+           __convert_dms_to_dd() - Converts Degree, minutes, seconds to
+                                   degree decimals.
+           get_html()            - Simply returns the output from __read().
+           get_dict()            - Returns a dictionary by refining the html data
+                                   adds GPS Coordinates to dictionary by passing
+                                   the latitude and longitude in dms format through
+                                   __convert_dms_to_dd().
 
     """
     
@@ -76,7 +86,7 @@ class MetaReader:
         li = []
         for item in raw[:raw.find("</table>")-7].split("</td>"):
             li.append(item[item.find("<td>")+len("<td>"):])
-        #converting the above list to dict, with first the key then value
+        # Converting the above list to dict, with first the key then value
         latitude = None
         longitude = None
         for i in range(0,len(li)-1,2):
@@ -91,6 +101,8 @@ class MetaReader:
                 val = re.sub(pattern2,'"',val)
             meta_dict[li[i]]=val
 
+            # If GPS latitude and longitude is present then convert it 
+            # to the form of decimal degrees.
             if(li[i] == "GPS Latitude"):
                 latitude = self.__convert_dms_to_dd(li[i+1])
             if(li[i] == "GPS Longitude"):
