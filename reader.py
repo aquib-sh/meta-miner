@@ -4,27 +4,22 @@ import sys
 import os
 
 class MetaReader:
-
+#COPYRIGHT(C) SHAIKH AQUIB
     """
     META READER CLASS
-    
-    Gets the html information from exiftool
-    Processes it and returns it as dictionary
-    or default html format
 
-Param: data-file (String)
-       <path of the file which is to be processed
-        for metadata>
+    Gets the html information from exiftool, processes it\n and returns it as dictionary or default html format.
 
-functions: __init__()            - Constructor.
-           __read()              - Runs subprocess returns html from stdout.
-           __convert_dms_to_dd() - Converts Degree, minutes, seconds to
-                                   degree decimals.
-           get_html()            - Simply returns the output from __read().
-           get_dict()            - Returns a dictionary by refining the html data
-                                   adds GPS Coordinates to dictionary by passing
-                                   the latitude and longitude in dms format through
-                                   __convert_dms_to_dd().
+Param: data_file (String)\n
+(path of the file which is to be processed for metadata)
+
+functions:
+ 
+get_html            - Simply returns the output from __read().
+
+get_dict            - Returns a dictionary by refining the html data.\n
+        Adds GPS Coordinates to dictionary by passing the latitude and longitude\n 
+        in dms format through __convert_dms_to_dd.
 
     """
     
@@ -113,10 +108,4 @@ functions: __init__()            - Constructor.
             meta_dict["GPS Coordinates"] = str(latitude) +" "+str(longitude) 
         return meta_dict
     
-
-#---------------------------------------------TESTING----------------------------------------------------------------
-obj = MetaReader("C:\\Users\\Aquib\\Downloads\\20200319_224342.jpg")
-meta_dict=obj.get_dict()
-for key, value in meta_dict.items():
-   print("{} : {} ".format(key,value))
 
