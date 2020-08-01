@@ -1,7 +1,7 @@
 """ 
 Author: Shaikh Aquib
 
-This is the Main class where we will initilize our Meta-Miner application.and integrate it with reader, writer and user_interface classes.
+This is the Main class where we will initialize our Meta-Miner application and integrate it with reader, writer and user_interface classes.
 
 """
 
