@@ -18,6 +18,7 @@ Functions: set_title        - Sets title of window.
 
 from tkinter import *
 from tkinter import ttk
+from PIL import ImageTk,Image
 
 class Application(Tk):
     def __init__(self,size):
@@ -98,22 +99,22 @@ class Application(Tk):
             button.grid(row=row_,column=column_)
         return button
 
+    # Creates frame
+    def create_frame(self,height_,width_,row_,column_):
+        frame = ttk.Frame(self,height=height_,width=width_,relief=RIDGE)
+        frame.grid(row=row_,column=column_,columnspan=4)
+        frame.pack_propagate(False)
+        return frame
 
-#--------------------------------------TESTING---------------------------------------------------
-def test():
-    pass
-
-if __name__ == "__main__":
-    obj = Application("700x400")
-    obj.set_title("Meta-Miner")
-    obj.set_icon("res\\icon.ico")
-
-    elements = {}
-    # First create an empty menu for using it as bar in for further submenu
-    bar = obj.add_menu("File",elements)
-    menu = obj.add_menu("Export",{"HTML":test,"JSON":test,"PDF":test,"Text":test},handle=bar)
-
-    obj.add_entry(60,0,0,spaces=35)
-    browse_button = obj.add_button("Browse",0,1,is_entry_button=True)
-
-    obj.mainloop()
+    def create_image_label(self,path,master=None):
+        pic = Image.open(path)
+        photo = ImageTk.PhotoImage(pic.resize((200, 200)))
+        if(master != None):
+            label = ttk.Label(master,image=photo)
+            label.img_ref=photo
+            print("reached")
+        else:
+            label = ttk.Label(self,image=photo)
+            label.img_ref=photo
+        label.pack()
+        return label
