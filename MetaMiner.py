@@ -1,7 +1,11 @@
 """ 
 Author: Shaikh Aquib
 
+<<<<<<< HEAD
 This is the MetaMiner class where we will initialize our Meta-Miner application and integrate it with reader, writer and user_interface classes.
+=======
+This is the MetaMiner class where we will initialize our Meta-Miner application and integrate it with functionalities of reader, writer and user_interface classes.
+>>>>>>> 0f58ae0a7d4284d60cf0b8beb0d7fb2650aa6ffd
 
 """
 
@@ -82,6 +86,10 @@ class MetaMiner():
         # then revert the path in the entry field back to what it was.
         if self.current_filename == "":
             self.current_filename = temp
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0f58ae0a7d4284d60cf0b8beb0d7fb2650aa6ffd
         # Delete whatever is in there already
         self.entry_.delete(0,END)
 
@@ -244,6 +252,7 @@ if __name__ == "__main__":
     app.menu()
     app.browse()
     canvas_elements = app.setup_canvas()
+<<<<<<< HEAD
     app.end()
 
 """
@@ -254,3 +263,7 @@ if __name__ == "__main__":
         button_window2 = self.canvas.create_window(500,10,window=b)
 
 """
+=======
+
+    app.end()
+>>>>>>> 0f58ae0a7d4284d60cf0b8beb0d7fb2650aa6ffd
