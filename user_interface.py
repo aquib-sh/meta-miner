@@ -25,7 +25,9 @@ class Application(Tk):
         super().__init__()
         self.geometry(size)
 
-
+    def return_root(self):
+        return self
+        
     # Sets title of window
     def set_title(self,title):
         self.title(title)
@@ -87,6 +89,8 @@ class Application(Tk):
             entry.grid(row=row_,column=column_+1)
         else:
             entry.grid(row=row_,column=column_)
+            
+        return entry
 
     # Adds button on the specified position
     def add_button(self,name,row_,column_,is_entry_button = False):
