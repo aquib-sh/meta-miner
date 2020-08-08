@@ -1,7 +1,7 @@
 """ 
 Author: Shaikh Aquib
 
-This is the Main class where we will initialize our Meta-Miner application and integrate it with reader, writer and user_interface classes.
+This is the MetaMiner class where we will initialize our Meta-Miner application and integrate it with functionalities of reader, writer and user_interface classes.
 
 """
 
@@ -14,7 +14,7 @@ from writer import MetaWriter
 from PIL import ImageTk,Image
 
 
-class Main():
+class MetaMiner():
 
     def __init__(self):
         self.obj = Application("700x400")
@@ -241,18 +241,9 @@ class Main():
         self.obj.mainloop()
     
 if __name__ == "__main__":
-    app = Main()
+    app = MetaMiner()
     app.menu()
     app.browse()
     canvas_elements = app.setup_canvas()
 
     app.end()
-
-"""
-        a = ttk.Button(self.canvas,text="Asad",command=lambda: self.update_image(img_obj,r"D:\Projects\meta-miner\res\test_cases\Images\f0820608.jpg"))
-        b = ttk.Button(self.canvas,text="Zahid",command=lambda: self.update_image(img_obj,r"D:\Projects\meta-miner\res\test_cases\Images\f0818368.jpg"))
-
-        button_window = self.canvas.create_window(30,10,window=a)
-        button_window2 = self.canvas.create_window(500,10,window=b)
-
-"""
