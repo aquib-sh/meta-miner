@@ -108,8 +108,7 @@ class MetaReader:
                 longitude = self.__convert_dms_to_dd(li[i+1])
         
         if(latitude != None and longitude != None):
-            meta_dict["GPS Coordinates"] = str(latitude) +" "+str(longitude)
-        print("[+] returning",meta_dict) 
+            meta_dict["GPS Coordinates"] = str(latitude) +" "+str(longitude) 
         return meta_dict
     
 
