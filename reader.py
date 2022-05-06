@@ -51,9 +51,7 @@ class MetaReader:
         pattern = r"(\d+) [a-z]* (\d+)&#39; (\d+)\.?[0]*&quot"
         res = re.search(pattern,text)
 
-        degree = float(res[1])
-        minutes = float(res[2])
-        seconds = float(res[3])
+        degree, minutes, seconds = list(map(float, res[1:3]))
 
         half = minutes/60 + seconds/3600
     
@@ -85,8 +83,8 @@ class MetaReader:
         for item in raw[:raw.find("</table>")-7].split("</td>"):
             li.append(item[item.find("<td>")+len("<td>"):])
         #converting the above list to dict, with first the key then value
-        latitude = None
-        longitude = None
+
+        latitude, longitude = None, None
         for i in range(0,len(li)-1,2):
             val = li[i+1]
 
@@ -104,10 +102,10 @@ class MetaReader:
 
             if(li[i] == "GPS Latitude"):
                 latitude = self.__convert_dms_to_dd(li[i+1])
-            if(li[i] == "GPS Longitude"):
+            elif(li[i] == "GPS Longitude"):
                 longitude = self.__convert_dms_to_dd(li[i+1])
         
-        if(latitude != None and longitude != None):
+        if((latitude and longitude) != None):
             meta_dict["GPS Coordinates"] = str(latitude) +" "+str(longitude) 
         return meta_dict
     
