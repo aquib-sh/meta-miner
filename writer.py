@@ -35,14 +35,13 @@ class MetaWriter:
         is_html must be True in constructor
         Data entered in the constructor must be an HTML string not a dictionary. """
         
-        if is_html == False:
+        if not is_html:
             raise Exception(error_msg)
         if type(self.data) != str:
             raise Exception(error_msg)
 
         with open(filename,"w") as f:
             f.write(self.data)
-        f.close()
 
     # Write the data as a JSON file
     def write_to_json(self, filename):
@@ -51,7 +50,6 @@ class MetaWriter:
 
         with open(filename,"w") as f:
             json.dump(self.data,f,indent=2)
-        f.close()
 
     # Write the data as Text file
     def write_to_txt(self, filename):
@@ -60,16 +58,14 @@ class MetaWriter:
 
         with open(filename,"w") as f:
             for key,value in self.data.items():
-                f.write("{} : {}\n".format(key, value))
-        f.close()
+                f.write(f"{key} : {value}\n")
 
     # Write as a pdf
     def write_to_pdf(self,filename):
         if type(self.data) != dict:
             raise Exception("data in constructor must be a dictionary type object ")
-        data_list = []
-        for key,value in self.data.items():
-            data_list.append([key,value])
+
+        data_list = [[key, value] for key, value in self.data.items()]
 
         report = SimpleDocTemplate(filename)
         #style_ = getSampleStyleSheet() 
