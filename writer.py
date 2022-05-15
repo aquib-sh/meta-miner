@@ -18,29 +18,30 @@ import os
 import json
 from PyPDF2 import PdfFileWriter
 from reportlab.platypus import SimpleDocTemplate
-from reportlab.platypus import Image,Paragraph,Spacer,Table
+from reportlab.platypus import Image, Paragraph, Spacer, Table
 from reportlab.lib.styles import getSampleStyleSheet
+
 
 class MetaWriter:
 
     # Constructor taking String or Dictionary data
     def __init__(self, data, is_html=False):
-        """ If the data is an HTML string then do is_html = True """
+        """If the data is an HTML string then do is_html = True"""
         self.data = data
 
     # Write the data as an HTML file
-    def write_to_html(self, filename,is_html=True):
-        
+    def write_to_html(self, filename, is_html=True):
+
         error_msg = """ 
         is_html must be True in constructor
         Data entered in the constructor must be an HTML string not a dictionary. """
-        
+
         if not is_html:
             raise Exception(error_msg)
         if type(self.data) != str:
             raise Exception(error_msg)
 
-        with open(filename,"w") as f:
+        with open(filename, "w") as f:
             f.write(self.data)
 
     # Write the data as a JSON file
@@ -48,27 +49,27 @@ class MetaWriter:
         if type(self.data) != dict:
             raise Exception("Data entered in constructor must be a dictionary")
 
-        with open(filename,"w") as f:
-            json.dump(self.data,f,indent=2)
+        with open(filename, "w") as f:
+            json.dump(self.data, f, indent=2)
 
     # Write the data as Text file
     def write_to_txt(self, filename):
         if type(self.data) != dict:
             raise Exception("data parameter in constructor must be a dictionary type")
 
-        with open(filename,"w") as f:
-            for key,value in self.data.items():
+        with open(filename, "w") as f:
+            for key, value in self.data.items():
                 f.write(f"{key} : {value}\n")
 
     # Write as a pdf
-    def write_to_pdf(self,filename):
+    def write_to_pdf(self, filename):
         if type(self.data) != dict:
             raise Exception("data in constructor must be a dictionary type object ")
 
         data_list = [[key, value] for key, value in self.data.items()]
 
         report = SimpleDocTemplate(filename)
-        #style_ = getSampleStyleSheet() 
+        # style_ = getSampleStyleSheet()
         report_table = Table(data=data_list)
-        
+
         report.build([report_table])
